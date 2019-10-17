@@ -9,7 +9,7 @@ contract Supercontract {
   constructor() public {
   }
 
-  function AddValue(uint128 value) internal {
+  function AddValue(uint128 value) public {
     _values.push(value);
   }
 
@@ -53,7 +53,9 @@ returns(uint128 val3, uint128 val4)
   val3 = val2;
   val4 = val1;
 }
-
+function length() public view returns(uint256) {
+  return _values.length;
+}
   function search(int256 value ) public view returns (int256 returnValue) {
    // if (value > 0) return value;
    returnValue = -1;
