@@ -1,6 +1,8 @@
 pragma solidity ^0.5.0;
 
 
+import "../contracts/LibrerySwap.sol";
+
 contract Supercontract {
 //value a () public pure returns
   uint128[] _values;
@@ -19,7 +21,7 @@ contract Supercontract {
 for (uint128 i = 0; i < _values.length; i ++) {
   for (uint128 j = 0; j < _values.length - i; j++) {
     if(_values[j] > _values[j + 1]){
-      (_values[j], _values[j + 1]) = Swap(_values[j], _values[j + 1]);
+      (_values[j], _values[j + 1]) = LibrerySwap.SwapValues(_values[j], _values[j + 1]);
       hasSwaps = true;
     }
   }
@@ -32,30 +34,23 @@ function SelectionSort() public {
   delete _newValues;
 //TODO: https://dotnetfiddle.net/Anbtdf
   for (uint128 i = 0; i < _values.length; i++) {
+    uint128 min = _values[i];
+    uint128 minIndex = i;
     for (uint128 j = i; j < (_values.length - i); j++) {
       uint128 tmp = _values[j];
-    //  if(tmp<)
+      if(tmp < min) {
+        tmp = min; //значение элемента потенциально меньшего
+        minIndex = j; //индекс элемента потенциально меньшего
+      }
     }
+   LibrerySwap.SwapValues(_values[i], min);
   }
 }
 
-  //  for (uint128 i = 1; i < _values.length; i ++ ) {
-    // int256 x = (_values[i]);
-      //if (x < tmpvalue) {
-      // (_values[i - 1], _values[i]) = Swap(_values[i - 1], _values[i]);
-     // }
-    //}
-  //}
-
-function Swap(uint128 val1, uint128 val2) public pure
-returns(uint128 val3, uint128 val4)
-{
-  val3 = val2;
-  val4 = val1;
-}
 function length() public view returns(uint256) {
   return _values.length;
 }
+
   function search(int256 value ) public view returns (int256 returnValue) {
    // if (value > 0) return value;
    returnValue = -1;
